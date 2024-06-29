@@ -1,4 +1,6 @@
-﻿namespace GeniyIdiot
+﻿using System.Text;
+
+namespace GeniyIdiot
 {
     class Program
     {
@@ -9,29 +11,30 @@
                 Console.WriteLine("Здравствуйте! Как вас зовут?");
                 var userName = Console.ReadLine();
 
-                var countQuestions = 5;
-                var questions = GetQuestions(countQuestions);
+                var questions = GetQuestions();
+                var answers = GetAnswers();
 
-                var answers = GetAnswers(countQuestions);
+                var countQuestions = questions.Count();
 
                 var countRightAnswers = 0;
 
-                Shuffle(questions, answers);
+                var random = new Random();
 
                 for (int i = 0; i < countQuestions; i++)
                 {
                     Console.WriteLine($"Вопрос №{i + 1}");
-
-                    Console.WriteLine(questions[i]);
+                    var questionIndex = random.Next(questions.Count);
+                    Console.WriteLine(questions[questionIndex]);
                     var userAnswer = GetUserAnswer();
-
-
-                    var rightAnswer = answers[i];
+                    
+                    var rightAnswer = answers[questionIndex];
 
                     if (userAnswer == rightAnswer)
                     {
                         ++countRightAnswers;
                     }
+                    questions.RemoveAt(questionIndex);
+                    answers.RemoveAt(questionIndex);
                 }
                 Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
 
@@ -40,7 +43,14 @@
                
                 Console.WriteLine($"{userName},Ваш диагноз: {diagnosis}");
 
-                var userChoice = GetUserChoice("Хотите начать сначала?");
+                SaveUserResult(userName, countRightAnswers, diagnosis);
+                var userChoice = GetUserChoice("Хотите посмотреть предыдущие результаты игры?");
+                if (userChoice)
+                {
+                    ShowUserResults();
+                }
+
+                userChoice = GetUserChoice("Хотите начать сначала?");
                 if (!userChoice)
                 {
                     break;
@@ -49,7 +59,39 @@
             }
         }
 
-        private static string CalculateDiagnosis(int countQuestions, int countRightAnswers)
+        static void ShowUserResults()
+        {
+            var reader = new StreamReader("userResults.txt", Encoding.UTF8);
+
+            Console.WriteLine("{0,-20}{1,18}{2,15}", "Имя", "Кол-во правильных ответов", "Диагноз");
+
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                var values = line.Split('#');
+                var name = values[0];
+                var countRightAnswers = Convert.ToInt32(values[1]);
+                var diagnosis = values[2];
+
+                Console.WriteLine("{0,-20}{1,18}{2,15}", name, countRightAnswers, diagnosis);
+            }
+            reader.Close();
+        }
+
+        static void SaveUserResult(string? userName, int countRightAnswers, string diagnosis)
+        {
+            var value = $"{userName}#{countRightAnswers}#{diagnosis}";
+            AppendToFile("userResults.txt", value);
+        }
+
+        static void AppendToFile(string fileName, string value)
+        {
+            var writer = new StreamWriter(fileName, true, Encoding.UTF8);
+            writer.WriteLine(value);
+            writer.Close();
+        }
+
+        static string CalculateDiagnosis(int countQuestions, int countRightAnswers)
         {
             var diagnoses = GetDiagnoses();
 
@@ -58,7 +100,7 @@
             return diagnoses[percentRightAnswers / 20];
         }
 
-        private static int GetUserAnswer()
+        static int GetUserAnswer()
         {
             while (true)
             {
@@ -77,26 +119,30 @@
                 }
             }
         }
-        static string[] GetQuestions(int countQuestions)
+        static List<string> GetQuestions()
         {
-            var questions = new string[countQuestions];
-            questions[0] = "Сколько будет два плюс два умноженное на два?";
-            questions[1] = "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?";
-            questions[2] = "На двух руках 10 пальцев. Сколько пальцев на 5 руках?";
-            questions[3] = "Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?";
-            questions[4] = "Пять свечей горело, две потухли. Сколько свечей осталось?";
+            var questions = new List<string>
+            {
+                "Сколько будет два плюс два умноженное на два?",
+                "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?",
+                "На двух руках 10 пальцев. Сколько пальцев на 5 руках?",
+                "Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?",
+                "Пять свечей горело, две потухли. Сколько свечей осталось?"
+            };
 
             return questions;
         }
 
-        static int[] GetAnswers(int countAnswers)
+        static List<int> GetAnswers()
         {
-            var answers = new int[countAnswers];
-            answers[0] = 6;
-            answers[1] = 9;
-            answers[2] = 25;
-            answers[3] = 60;
-            answers[4] = 2;
+            var answers = new List<int>
+            {
+                6,
+                9,
+                25,
+                60,
+                2
+            };
 
             return answers;
         }
@@ -129,24 +175,6 @@
                 {
                     return true;
                 }
-            }
-        }
-
-        static void Shuffle(string[] questions, int[] answers)
-        {
-            var random = new Random();
-
-            for (int i = questions.Length - 1; i > 1; i--)
-            {
-                var index = random.Next(0, i);
-
-                var tempQuestion = questions[index];
-                questions[index] = questions[i];
-                questions[i] = tempQuestion;
-
-                var tempAnswer = answers[index];
-                answers[index] = answers[i];
-                answers[i] = tempAnswer;
             }
         }
     }
