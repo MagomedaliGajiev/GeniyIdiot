@@ -4,37 +4,63 @@
     {
         static void Main(string[] args)
         {
-            var countQuestions = 5;
-            var questions = GetQuestions(countQuestions);
-
-            var answers = GetAnswers(countQuestions);
-
-            var countRightAnswers = 0;
-
-            var random = new Random();
-
-            for (int i = 0; i < countQuestions; i++)
+            while (true)
             {
-                Console.WriteLine($"Вопрос №{i + 1}");
+                Console.WriteLine("Здравствуйте! Как вас зовут?");
+                var userName = Console.ReadLine();
 
-                var randomQuestionIndex = random.Next(0, countQuestions);
-                Console.WriteLine(questions[randomQuestionIndex]);
+                var countQuestions = 5;
+                var questions = GetQuestions(countQuestions);
 
-                var userAnswer = Convert.ToInt32(Console.ReadLine());
+                var answers = GetAnswers(countQuestions);
 
-                var rightAnswer = answers[randomQuestionIndex];
+                var countRightAnswers = 0;
 
-                if (userAnswer == rightAnswer)
+                var random = new Random();
+
+                for (int i = countQuestions - 1; i >= 1; i--)
                 {
-                    ++countRightAnswers;
-                }
-            }
-            Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
+                    var index = random.Next(0, i);
 
-            var diagnoses = GetDiagnoses();
+                    var tempQuestion = questions[index];
+                    questions[index] = questions[i];
+                    questions[i] = tempQuestion;
+
+                    var tempAnswer = answers[index];
+                    answers[index] = answers[i];
+                    answers[i] = tempAnswer;
+                }
+
+                for (int i = 0; i < countQuestions; i++)
+                {
+                    Console.WriteLine($"Вопрос №{i + 1}");
+
+                    Console.WriteLine(questions[i]);
+
+                    var userAnswer = Convert.ToInt32(Console.ReadLine());
+
+                    var rightAnswer = answers[i];
+
+                    if (userAnswer == rightAnswer)
+                    {
+                        ++countRightAnswers;
+                    }
+                }
+                Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
+
+                var diagnoses = GetDiagnoses();
+                Console.WriteLine($"{userName},Ваш диагноз: {diagnoses[countRightAnswers]}");
+
+                var userChoice = GetUserChoice("Хотите начать сначала?");
+                if (!userChoice)
+                {
+                    break;
+                }
+
+            }
         }
 
-        private static string[] GetQuestions(int countQuestions)
+        static string[] GetQuestions(int countQuestions)
         {
             var questions = new string[countQuestions];
             questions[0] = "Сколько будет два плюс два умноженное на два?";
@@ -46,7 +72,7 @@
             return questions;
         }
 
-        private static int[] GetAnswers(int countAnswers)
+        static int[] GetAnswers(int countAnswers)
         {
             var answers = new int[countAnswers];
             answers[0] = 6;
@@ -58,9 +84,9 @@
             return answers;
         }
 
-        private static string[] GetDiagnoses()
+        static string[] GetDiagnoses()
         {
-            var diagnoses = new string[countDiagnoses];
+            var diagnoses = new string[6];
             diagnoses[0] = "кретин";
             diagnoses[1] = "идиот";
             diagnoses[2] = "дурак";
@@ -69,6 +95,24 @@
             diagnoses[5] = "гений";
 
             return diagnoses;
+        }
+
+        static bool GetUserChoice(string message)
+        {
+            while (true)
+            {
+                Console.WriteLine($"{message} Введите Да или Нет");
+                var userInput = Console.ReadLine();
+
+                if (userInput.ToLower() == "нет")
+                {
+                    return false;
+                }
+                if (userInput.ToLower() == "да")
+                {
+                    return true;
+                }
+            }
         }
     }
 }
