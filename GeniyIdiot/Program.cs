@@ -23,8 +23,8 @@
                     Console.WriteLine($"Вопрос №{i + 1}");
 
                     Console.WriteLine(questions[i]);
+                    var userAnswer = GetUserAnswer();
 
-                    var userAnswer = Convert.ToInt32(Console.ReadLine());
 
                     var rightAnswer = answers[i];
 
@@ -47,6 +47,25 @@
             }
         }
 
+        private static int GetUserAnswer()
+        {
+            while (true)
+            {
+                try
+                {
+                    return Convert.ToInt32(Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+
+                    Console.WriteLine("Пожалуйста, введите число!");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Пожалуйста, введите число от -2*10^9 до 2*10^9");
+                }
+            }
+        }
         static string[] GetQuestions(int countQuestions)
         {
             var questions = new string[countQuestions];
