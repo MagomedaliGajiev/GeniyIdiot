@@ -35,8 +35,10 @@
                 }
                 Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
 
-                var diagnoses = GetDiagnoses();
-                Console.WriteLine($"{userName},Ваш диагноз: {diagnoses[countRightAnswers]}");
+                var diagnosis = CalculateDiagnosis(countQuestions, countRightAnswers);
+
+               
+                Console.WriteLine($"{userName},Ваш диагноз: {diagnosis}");
 
                 var userChoice = GetUserChoice("Хотите начать сначала?");
                 if (!userChoice)
@@ -45,6 +47,15 @@
                 }
 
             }
+        }
+
+        private static string CalculateDiagnosis(int countQuestions, int countRightAnswers)
+        {
+            var diagnoses = GetDiagnoses();
+
+            var percentRightAnswers = countRightAnswers * 100 / countQuestions;
+
+            return diagnoses[percentRightAnswers / 20];
         }
 
         private static int GetUserAnswer()
