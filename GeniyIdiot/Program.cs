@@ -16,20 +16,7 @@
 
                 var countRightAnswers = 0;
 
-                var random = new Random();
-
-                for (int i = countQuestions - 1; i >= 1; i--)
-                {
-                    var index = random.Next(0, i);
-
-                    var tempQuestion = questions[index];
-                    questions[index] = questions[i];
-                    questions[i] = tempQuestion;
-
-                    var tempAnswer = answers[index];
-                    answers[index] = answers[i];
-                    answers[i] = tempAnswer;
-                }
+                Shuffle(questions, answers);
 
                 for (int i = 0; i < countQuestions; i++)
                 {
@@ -112,6 +99,24 @@
                 {
                     return true;
                 }
+            }
+        }
+
+        static void Shuffle(string[] questions, int[] answers)
+        {
+            var random = new Random();
+
+            for (int i = questions.Length - 1; i > 1; i--)
+            {
+                var index = random.Next(0, i);
+
+                var tempQuestion = questions[index];
+                questions[index] = questions[i];
+                questions[i] = tempQuestion;
+
+                var tempAnswer = answers[index];
+                answers[index] = answers[i];
+                answers[i] = tempAnswer;
             }
         }
     }
