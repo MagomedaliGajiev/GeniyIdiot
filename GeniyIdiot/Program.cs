@@ -22,6 +22,7 @@
 
             for (int i = 0; i < 5; i++)
             {
+                Console.WriteLine($"Вопрос №{i + 1}");
                 Console.WriteLine(questions[i]);
 
                 var userAnswer = Convert.ToInt32(Console.ReadLine());
@@ -34,6 +35,8 @@
                 }
             }
             Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
+
+
         }
     }
 }
