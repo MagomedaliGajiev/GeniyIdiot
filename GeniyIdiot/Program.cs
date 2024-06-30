@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System.Xml.Linq;
-
-namespace GeniyIdiot
+﻿namespace GeniyIdiot
 {
     class Program
     {
