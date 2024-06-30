@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Xml.Linq;
 
 namespace GeniyIdiot
 {
@@ -37,7 +38,7 @@ namespace GeniyIdiot
                 user.Diagnosis = diagnosis;
                 Console.WriteLine($"{userName},Ваш диагноз: {diagnosis}");
 
-                SaveUserResult(user);
+                UserResultsStorage.Save(user);
 
                 var userChoice = GetUserChoice("Хотите посмотреть предыдущие результаты игры?");
                 if (userChoice)
@@ -56,36 +57,13 @@ namespace GeniyIdiot
 
         static void ShowUserResults()
         {
-            var reader = new StreamReader("userResults.txt", Encoding.UTF8);
-
+            var result = UserResultsStorage.GetUserResults();
             Console.WriteLine("{0,-20}{1,18}{2,15}", "Имя", "Кол-во правильных ответов", "Диагноз");
-
-            while (!reader.EndOfStream)
+            foreach (var user in result)
             {
-                var line = reader.ReadLine();
-                var values = line.Split('#');
-                var name = values[0];
-                var countRightAnswers = Convert.ToInt32(values[1]);
-                var diagnosis = values[2];
-
-                Console.WriteLine("{0,-20}{1,18}{2,15}", name, countRightAnswers, diagnosis);
+                Console.WriteLine("{0,-20}{1,18}{2,15}", user.Name, user.CountRightAnswers, user.Diagnosis);
             }
-            reader.Close();
         }
-
-        static void SaveUserResult(User user)
-        {
-            var value = $"{user.Name}#{user.CountRightAnswers}#{user.Diagnosis}";
-            AppendToFile("userResults.txt", value);
-        }
-
-        static void AppendToFile(string fileName, string value)
-        {
-            var writer = new StreamWriter(fileName, true, Encoding.UTF8);
-            writer.WriteLine(value);
-            writer.Close();
-        }
-
         static string CalculateDiagnosis(int countQuestions, int countRightAnswers)
         {
             var diagnoses = GetDiagnoses();
