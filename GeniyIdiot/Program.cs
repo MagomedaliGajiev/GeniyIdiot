@@ -19,7 +19,7 @@
                     Console.WriteLine($"Вопрос №{i + 1}");
                     var questionIndex = random.Next(questions.Count);
                     Console.WriteLine(questions[questionIndex].Text);
-                    var userAnswer = GetUserAnswer();
+                    var userAnswer = GetNumber();
                     
                     var rightAnswer = questions[questionIndex].Answer;
 
@@ -43,6 +43,12 @@
                     ShowUserResults();
                 }
 
+                userChoice = GetUserChoice("Хотите добавить новый вопрос?");
+                if (userChoice)
+                {
+                    AddNewQuestion();
+                }
+
                 userChoice = GetUserChoice("Хотите начать сначала?");
                 if (!userChoice)
                 {
@@ -50,6 +56,18 @@
                 }
 
             }
+        }
+
+        private static void AddNewQuestion()
+        {
+            Console.WriteLine("Введите текст вопроса");
+            var text = Console.ReadLine();
+            Console.WriteLine("Введите ответ на вопрос");
+            var answer = GetNumber();
+
+            var newQuestion = new Question(text, answer);
+
+            QuestionsStorage.Add(newQuestion);
         }
 
         static void ShowUserResults()
@@ -70,7 +88,7 @@
             return diagnoses[percentRightAnswers / 20];
         }
 
-        static int GetUserAnswer()
+        static int GetNumber()
         {
             while (true)
             {

@@ -18,5 +18,10 @@ namespace GeniyIdiot
             reader.Close();
             return value;
         }
+
+        public static bool Exists(string fileName)
+        {
+            return File.Exists(fileName);
+        }
     }
 }
