@@ -10,11 +10,9 @@ namespace GeniyIdiot
             {
                 Console.WriteLine("Здравствуйте! Как вас зовут?");
                 var userName = Console.ReadLine();
+                var user = new User(userName);
                 var questions = QuestionsStorage.GetAll();
-
                 var countQuestions = questions.Count();
-
-                var countRightAnswers = 0;
 
                 var random = new Random();
 
@@ -29,18 +27,18 @@ namespace GeniyIdiot
 
                     if (userAnswer == rightAnswer)
                     {
-                        ++countRightAnswers;
+                        user.AcceptRightAnswer();
                     }
                     questions.RemoveAt(questionIndex);
                 }
-                Console.WriteLine($"Количество правильных ответов: {countRightAnswers}");
+                Console.WriteLine($"Количество правильных ответов: {user.CountRightAnswers}");
 
-                var diagnosis = CalculateDiagnosis(countQuestions, countRightAnswers);
-
-               
+                var diagnosis = CalculateDiagnosis(countQuestions, user.CountRightAnswers);
+                user.Diagnosis = diagnosis;
                 Console.WriteLine($"{userName},Ваш диагноз: {diagnosis}");
 
-                SaveUserResult(userName, countRightAnswers, diagnosis);
+                SaveUserResult(user);
+
                 var userChoice = GetUserChoice("Хотите посмотреть предыдущие результаты игры?");
                 if (userChoice)
                 {
@@ -75,9 +73,9 @@ namespace GeniyIdiot
             reader.Close();
         }
 
-        static void SaveUserResult(string? userName, int countRightAnswers, string diagnosis)
+        static void SaveUserResult(User user)
         {
-            var value = $"{userName}#{countRightAnswers}#{diagnosis}";
+            var value = $"{user.Name}#{user.CountRightAnswers}#{user.Diagnosis}";
             AppendToFile("userResults.txt", value);
         }
 
