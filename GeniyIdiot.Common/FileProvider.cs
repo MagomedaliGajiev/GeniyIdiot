@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace GeniyIdiot
+namespace GeniyIdiot.Common
 {
     public class FileProvider
     {
@@ -30,3 +30,4 @@ namespace GeniyIdiot
         }
     }
 }
+

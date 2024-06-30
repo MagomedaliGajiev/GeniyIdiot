@@ -1,4 +1,6 @@
-﻿namespace GeniyIdiot
+﻿using GeniyIdiot.Common;
+
+namespace GeniyIdiot
 {
     class Program
     {
@@ -17,23 +19,22 @@
                 for (int i = 0; i < countQuestions; i++)
                 {
                     Console.WriteLine($"Вопрос №{i + 1}");
-                    var questionIndex = random.Next(questions.Count);
-                    Console.WriteLine(questions[questionIndex].Text);
+                    var randomIndex = random.Next(questions.Count);
+                    Console.WriteLine(questions[randomIndex].Text);
                     var userAnswer = GetNumber();
-                    
-                    var rightAnswer = questions[questionIndex].Answer;
 
+                    var rightAnswer = questions[randomIndex].Answer;
                     if (userAnswer == rightAnswer)
                     {
                         user.AcceptRightAnswer();
                     }
-                    questions.RemoveAt(questionIndex);
+                    questions.RemoveAt(randomIndex);
                 }
                 Console.WriteLine($"Количество правильных ответов: {user.CountRightAnswers}");
 
-                var diagnosis = CalculateDiagnosis(countQuestions, user.CountRightAnswers);
+                var diagnosis = DiagnosisCalculator.CalculateDiagnosis(countQuestions, user.CountRightAnswers);
                 user.Diagnosis = diagnosis;
-                Console.WriteLine($"{userName},Ваш диагноз: {diagnosis}");
+                Console.WriteLine($"{user.Name},Ваш диагноз: {user.Diagnosis}");
 
                 UserResultsStorage.Save(user);
 
@@ -84,7 +85,7 @@
             QuestionsStorage.Remove(removeQuestion);
         }
 
-        private static void AddNewQuestion()
+        static void AddNewQuestion()
         {
             Console.WriteLine("Введите текст вопроса");
             var text = Console.ReadLine();
@@ -105,14 +106,6 @@
                 Console.WriteLine("{0,-20}{1,18}{2,15}", user.Name, user.CountRightAnswers, user.Diagnosis);
             }
         }
-        static string CalculateDiagnosis(int countQuestions, int countRightAnswers)
-        {
-            var diagnoses = GetDiagnoses();
-
-            var percentRightAnswers = countRightAnswers * 100 / countQuestions;
-
-            return diagnoses[percentRightAnswers / 20];
-        }
 
         static int GetNumber()
         {
@@ -132,19 +125,6 @@
                     Console.WriteLine("Пожалуйста, введите число от -2*10^9 до 2*10^9");
                 }
             }
-        }
-
-        static string[] GetDiagnoses()
-        {
-            var diagnoses = new string[6];
-            diagnoses[0] = "кретин";
-            diagnoses[1] = "идиот";
-            diagnoses[2] = "дурак";
-            diagnoses[3] = "нормальный";
-            diagnoses[4] = "талант";
-            diagnoses[5] = "гений";
-
-            return diagnoses;
         }
 
         static bool GetUserChoice(string message)

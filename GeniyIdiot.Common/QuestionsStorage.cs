@@ -1,5 +1,4 @@
-﻿
-namespace GeniyIdiot
+﻿namespace GeniyIdiot.Common
 {
     public class QuestionsStorage
     {
