@@ -10,7 +10,7 @@
         public static List<User> GetUserResults()
         {
             var value = FileProvider.GetValue("userResults.txt");
-            var lines = value.Split('\n');
+            var lines = value.Split('\n', StringSplitOptions.RemoveEmptyEntries);
             var results = new List<User>();
             foreach (var line in lines)
             {
