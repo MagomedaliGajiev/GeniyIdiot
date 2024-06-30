@@ -14,7 +14,7 @@
 
             return diagnoses;
         }
-        public static string CalculateDiagnosis(int countQuestions, int countRightAnswers)
+        public static string Calculate(int countQuestions, int countRightAnswers)
         {
             var diagnoses = GetDiagnoses();
 

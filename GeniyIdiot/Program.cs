@@ -32,7 +32,7 @@ namespace GeniyIdiot
                 }
                 Console.WriteLine($"Количество правильных ответов: {user.CountRightAnswers}");
 
-                var diagnosis = DiagnosisCalculator.CalculateDiagnosis(countQuestions, user.CountRightAnswers);
+                var diagnosis = DiagnosisCalculator.Calculate(countQuestions, user.CountRightAnswers);
                 user.Diagnosis = diagnosis;
                 Console.WriteLine($"{user.Name},Ваш диагноз: {user.Diagnosis}");
 

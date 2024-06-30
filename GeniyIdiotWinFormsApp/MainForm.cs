@@ -16,9 +16,12 @@ namespace GeniyIdiotWinFormsApp
          
         private void mainForm_Load(object sender, EventArgs e)
         {
+            var welcomeForm = new WelcomeForm();
+            welcomeForm.ShowDialog();
+
+            user = new User(welcomeForm.userNameTextBox.Text);
             questions = QuestionsStorage.GetAll();
             countQuestions = questions.Count;
-            user = new User("Неизвестно");
             questionNumber = 0;
 
             ShowNextQuestion();
@@ -48,12 +51,18 @@ namespace GeniyIdiotWinFormsApp
             var endGame = questions.Count == 0;
             if (endGame)
             {
-                var diagnosis = DiagnosisCalculator.CalculateDiagnosis(countQuestions, user.CountRightAnswers);
+                var diagnosis = DiagnosisCalculator.Calculate(countQuestions, user.CountRightAnswers);
                 user.Diagnosis = diagnosis;
-                MessageBox.Show($"{user.Name},Ваш диагноз: {user.Diagnosis}");
-                return;
+
+                UserResultsStorage.Save(user);
+
+                var message = $"{user.Name},Ваш диагноз: {user.Diagnosis}";
+                MessageBox.Show(message);
             }
-            ShowNextQuestion();
+            else
+            {
+                ShowNextQuestion();
+            }
         }
     }
 }
