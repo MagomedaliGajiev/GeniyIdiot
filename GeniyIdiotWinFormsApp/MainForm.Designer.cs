@@ -106,6 +106,7 @@
             рестартToolStripMenuItem.Name = "рестартToolStripMenuItem";
             рестартToolStripMenuItem.Size = new Size(589, 44);
             рестартToolStripMenuItem.Text = "Рестарт";
+            рестартToolStripMenuItem.Click += рестартToolStripMenuItem_Click;
             // 
             // выходToolStripMenuItem
             // 
