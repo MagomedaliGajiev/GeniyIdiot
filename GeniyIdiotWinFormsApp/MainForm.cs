@@ -13,7 +13,7 @@ namespace GeniyIdiotWinFormsApp
         {
             InitializeComponent();
         }
-         
+
         private void mainForm_Load(object sender, EventArgs e)
         {
             var welcomeForm = new WelcomeForm();
@@ -63,6 +63,11 @@ namespace GeniyIdiotWinFormsApp
             {
                 ShowNextQuestion();
             }
+        }
+
+        private void ‚˚ıÓ‰ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

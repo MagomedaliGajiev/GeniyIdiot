@@ -32,6 +32,12 @@
             questionNumberLabel = new Label();
             questionTextLabel = new Label();
             userAnswerTextBox = new TextBox();
+            menuStrip1 = new MenuStrip();
+            файлToolStripMenuItem = new ToolStripMenuItem();
+            показатьПредыдущиеРеToolStripMenuItem = new ToolStripMenuItem();
+            рестартToolStripMenuItem = new ToolStripMenuItem();
+            выходToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // nextButton
@@ -49,7 +55,7 @@
             // 
             questionNumberLabel.AutoSize = true;
             questionNumberLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            questionNumberLabel.Location = new Point(25, 26);
+            questionNumberLabel.Location = new Point(25, 62);
             questionNumberLabel.Name = "questionNumberLabel";
             questionNumberLabel.Size = new Size(190, 45);
             questionNumberLabel.TabIndex = 1;
@@ -72,7 +78,43 @@
             userAnswerTextBox.Size = new Size(399, 39);
             userAnswerTextBox.TabIndex = 3;
             // 
-            // mainForm
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(32, 32);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1266, 42);
+            menuStrip1.TabIndex = 4;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // файлToolStripMenuItem
+            // 
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { показатьПредыдущиеРеToolStripMenuItem, рестартToolStripMenuItem, выходToolStripMenuItem });
+            файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            файлToolStripMenuItem.Size = new Size(90, 38);
+            файлToolStripMenuItem.Text = "Файл";
+            // 
+            // показатьПредыдущиеРеToolStripMenuItem
+            // 
+            показатьПредыдущиеРеToolStripMenuItem.Name = "показатьПредыдущиеРеToolStripMenuItem";
+            показатьПредыдущиеРеToolStripMenuItem.Size = new Size(589, 44);
+            показатьПредыдущиеРеToolStripMenuItem.Text = "Показать предыдущие результаты игры";
+            // 
+            // рестартToolStripMenuItem
+            // 
+            рестартToolStripMenuItem.Name = "рестартToolStripMenuItem";
+            рестартToolStripMenuItem.Size = new Size(589, 44);
+            рестартToolStripMenuItem.Text = "Рестарт";
+            // 
+            // выходToolStripMenuItem
+            // 
+            выходToolStripMenuItem.Name = "выходToolStripMenuItem";
+            выходToolStripMenuItem.Size = new Size(589, 44);
+            выходToolStripMenuItem.Text = "Выход";
+            выходToolStripMenuItem.Click += выходToolStripMenuItem_Click;
+            // 
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -81,9 +123,13 @@
             Controls.Add(questionTextLabel);
             Controls.Add(questionNumberLabel);
             Controls.Add(nextButton);
-            Name = "mainForm";
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
+            Name = "MainForm";
             Text = "Гений Идиот";
             Load += mainForm_Load;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -94,5 +140,10 @@
         private Label questionNumberLabel;
         private Label questionTextLabel;
         private TextBox userAnswerTextBox;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem файлToolStripMenuItem;
+        private ToolStripMenuItem показатьПредыдущиеРеToolStripMenuItem;
+        private ToolStripMenuItem рестартToolStripMenuItem;
+        private ToolStripMenuItem выходToolStripMenuItem;
     }
 }
