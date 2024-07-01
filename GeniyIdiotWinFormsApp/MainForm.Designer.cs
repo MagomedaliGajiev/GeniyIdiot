@@ -100,6 +100,7 @@
             показатьПредыдущиеРеToolStripMenuItem.Name = "показатьПредыдущиеРеToolStripMenuItem";
             показатьПредыдущиеРеToolStripMenuItem.Size = new Size(589, 44);
             показатьПредыдущиеРеToolStripMenuItem.Text = "Показать предыдущие результаты игры";
+            показатьПредыдущиеРеToolStripMenuItem.Click += показатьПредыдущиеРеToolStripMenuItem_Click;
             // 
             // рестартToolStripMenuItem
             // 

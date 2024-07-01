@@ -74,5 +74,11 @@ namespace GeniyIdiotWinFormsApp
         {
             Application.Restart();
         }
+
+        private void показатьѕредыдущие–еToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var resultsForm = new ResultsForm();
+            resultsForm.ShowDialog();
+        }
     }
 }

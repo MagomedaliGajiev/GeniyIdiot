@@ -99,9 +99,9 @@ namespace GeniyIdiot
 
         static void ShowUserResults()
         {
-            var result = UserResultsStorage.GetUserResults();
+            var results = UserResultsStorage.GetUserResults();
             Console.WriteLine("{0,-20}{1,18}{2,15}", "Имя", "Кол-во правильных ответов", "Диагноз");
-            foreach (var user in result)
+            foreach (var user in results)
             {
                 Console.WriteLine("{0,-20}{1,18}{2,15}", user.Name, user.CountRightAnswers, user.Diagnosis);
             }
