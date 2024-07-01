@@ -4,11 +4,7 @@ namespace GeniyIdiotWinFormsApp
 {
     public partial class MainForm : Form
     {
-        private List<Question> questions;
-        private Question currentQuestion;
-        private int countQuestions;
-        private User user;
-        private int questionNumber;
+        private Game game;
         public MainForm()
         {
             InitializeComponent();
@@ -19,49 +15,39 @@ namespace GeniyIdiotWinFormsApp
             var welcomeForm = new WelcomeForm();
             welcomeForm.ShowDialog();
 
-            user = new User(welcomeForm.userNameTextBox.Text);
-            questions = QuestionsStorage.GetAll();
-            countQuestions = questions.Count;
-            questionNumber = 0;
+            var user = new User(welcomeForm.userNameTextBox.Text);
+            game = new Game(user);
 
             ShowNextQuestion();
         }
 
         private void ShowNextQuestion()
         {
-            var random = new Random();
-            var randomIndex = random.Next(questions.Count);
-
-            currentQuestion = questions[randomIndex];
-
+            var currentQuestion = game.GetNextQuestion();
             questionTextLabel.Text = currentQuestion.Text;
-            questionNumberLabel.Text = $"Вопрос № {++questionNumber}";
+
+            questionNumberLabel.Text = game.GetQuestionNumberText();
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            var userAnswer = Convert.ToInt32(userAnswerTextBox.Text);
-            var rightAnswer = currentQuestion.Answer;
-            if (userAnswer == rightAnswer)
+            var parsed = InputValidator.TryParseToNumber(userAnswerTextBox.Text, out int userAnswer, out string errorMessage);
+            if (!parsed)
             {
-                user.AcceptRightAnswer();
-            }
-            questions.Remove(currentQuestion);
-
-            var endGame = questions.Count == 0;
-            if (endGame)
-            {
-                var diagnosis = DiagnosisCalculator.Calculate(countQuestions, user.CountRightAnswers);
-                user.Diagnosis = diagnosis;
-
-                UserResultsStorage.Save(user);
-
-                var message = $"{user.Name},Ваш диагноз: {user.Diagnosis}";
-                MessageBox.Show(message);
+                MessageBox.Show(errorMessage);
             }
             else
             {
-                ShowNextQuestion();
+                game.AcceptAnswer(userAnswer);
+                if (game.End())
+                {
+                    var message = game.CalculateDiagnosis();
+                    MessageBox.Show(message);
+                }
+                else
+                {
+                    ShowNextQuestion();
+                }
             }
         }
 

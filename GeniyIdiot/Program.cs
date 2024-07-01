@@ -9,34 +9,23 @@ namespace GeniyIdiot
             while (true)
             {
                 Console.WriteLine("Здравствуйте! Как вас зовут?");
-                var userName = Console.ReadLine();
-                var user = new User(userName);
-                var questions = QuestionsStorage.GetAll();
-                var countQuestions = questions.Count();
-
-                var random = new Random();
-
-                for (int i = 0; i < countQuestions; i++)
+                var user = new User(Console.ReadLine());
+                var game = new Game(user);
+                
+                while (!game.End())
                 {
-                    Console.WriteLine($"Вопрос №{i + 1}");
-                    var randomIndex = random.Next(questions.Count);
-                    Console.WriteLine(questions[randomIndex].Text);
+                    var currentQuestion = game.GetNextQuestion();
+
+                    Console.WriteLine(game.GetQuestionNumberText);
+                    Console.WriteLine(currentQuestion.Text);
+
                     var userAnswer = GetNumber();
 
-                    var rightAnswer = questions[randomIndex].Answer;
-                    if (userAnswer == rightAnswer)
-                    {
-                        user.AcceptRightAnswer();
-                    }
-                    questions.RemoveAt(randomIndex);
+                    game.AcceptAnswer(userAnswer);
                 }
-                Console.WriteLine($"Количество правильных ответов: {user.CountRightAnswers}");
 
-                var diagnosis = DiagnosisCalculator.Calculate(countQuestions, user.CountRightAnswers);
-                user.Diagnosis = diagnosis;
-                Console.WriteLine($"{user.Name},Ваш диагноз: {user.Diagnosis}");
-
-                UserResultsStorage.Save(user);
+                var message = game.CalculateDiagnosis();
+                Console.WriteLine(message);
 
                 var userChoice = GetUserChoice("Хотите посмотреть предыдущие результаты игры?");
                 if (userChoice)
@@ -107,24 +96,14 @@ namespace GeniyIdiot
             }
         }
 
-        static int GetNumber()
+        private static int GetNumber()
         {
-            while (true)
+            int number;
+            while (!InputValidator.TryParseToNumber(Console.ReadLine(), out number, out string errorMessage))
             {
-                try
-                {
-                    return Convert.ToInt32(Console.ReadLine());
-                }
-                catch (FormatException)
-                {
-
-                    Console.WriteLine("Пожалуйста, введите число!");
-                }
-                catch (OverflowException)
-                {
-                    Console.WriteLine("Пожалуйста, введите число от -2*10^9 до 2*10^9");
-                }
+                Console.WriteLine(errorMessage);
             }
+            return number;
         }
 
         static bool GetUserChoice(string message)
