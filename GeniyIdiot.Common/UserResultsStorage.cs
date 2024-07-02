@@ -1,31 +1,31 @@
-﻿namespace GeniyIdiot.Common
+﻿using Newtonsoft.Json;
+
+namespace GeniyIdiot.Common
 {
     public class UserResultsStorage
     {
+        private static string _path = "userResults.json";
         public static void Save(User user)
         {
-            var value = $"{user.Name}#{user.CountRightAnswers}#{user.Diagnosis}";
-            FileProvider.Append("userResults.txt", value);
+            var userResults = GetAll();
+            userResults.Add(user);
+            Save(userResults);
         }
-        public static List<User> GetUserResults()
+        public static List<User> GetAll()
         {
-            var value = FileProvider.GetValue("userResults.txt");
-            var lines = value.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            var results = new List<User>();
-            foreach (var line in lines)
+            if (!FileProvider.Exists(_path))
             {
-                var values = line.Split('#');
-                var name = values[0];
-                var countRightAnswers = Convert.ToInt32(values[1]);
-                var diagnosis = values[2];
-
-                var user = new User(name);
-                user.CountRightAnswers = countRightAnswers;
-                user.Diagnosis = diagnosis;
-
-                results.Add(user);
+                return new List<User>();
             }
-            return results;
+            var filleData = FileProvider.Get(_path);
+            var userResults = JsonConvert.DeserializeObject<List<User>>(filleData);
+            return userResults;
+        }
+
+        static void Save(List<User> userResults)
+        {
+            var jsonData = JsonConvert.SerializeObject(userResults, Formatting.Indented);
+            FileProvider.Replace(_path, jsonData);
         }
     }
 }

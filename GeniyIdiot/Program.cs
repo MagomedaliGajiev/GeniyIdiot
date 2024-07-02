@@ -88,7 +88,7 @@ namespace GeniyIdiot
 
         static void ShowUserResults()
         {
-            var results = UserResultsStorage.GetUserResults();
+            var results = UserResultsStorage.GetAll();
             Console.WriteLine("{0,-20}{1,18}{2,15}", "Имя", "Кол-во правильных ответов", "Диагноз");
             foreach (var user in results)
             {

@@ -11,7 +11,7 @@ namespace GeniyIdiotWinFormsApp
 
         private void ResultsForm_Load(object sender, EventArgs e)
         {
-            var results = UserResultsStorage.GetUserResults();
+            var results = UserResultsStorage.GetAll();
             foreach (var result in results)
             {
                 resultsDataGridView.Rows.Add(result.Name, result.CountRightAnswers, result.Diagnosis);

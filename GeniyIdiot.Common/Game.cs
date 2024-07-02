@@ -35,7 +35,7 @@
 
         public string GetQuestionNumberText()
         {
-            return $"{user.Name},Ваш диагноз: {user.Diagnosis}";
+            return $"Вопрос № {questionNumber}";
         }
 
         public bool End()
