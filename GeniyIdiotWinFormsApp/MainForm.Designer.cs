@@ -37,6 +37,10 @@
             показатьПредыдущиеРеToolStripMenuItem = new ToolStripMenuItem();
             рестартToolStripMenuItem = new ToolStripMenuItem();
             выходToolStripMenuItem = new ToolStripMenuItem();
+            вопросыToolStripMenuItem = new ToolStripMenuItem();
+            списокВсехВопросовToolStripMenuItem = new ToolStripMenuItem();
+            добавитьНовыйВопросToolStripMenuItem = new ToolStripMenuItem();
+            удалитьToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -90,7 +94,7 @@
             // 
             // файлToolStripMenuItem
             // 
-            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { показатьПредыдущиеРеToolStripMenuItem, рестартToolStripMenuItem, выходToolStripMenuItem });
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { показатьПредыдущиеРеToolStripMenuItem, рестартToolStripMenuItem, выходToolStripMenuItem, вопросыToolStripMenuItem });
             файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             файлToolStripMenuItem.Size = new Size(90, 38);
             файлToolStripMenuItem.Text = "Файл";
@@ -115,6 +119,34 @@
             выходToolStripMenuItem.Size = new Size(589, 44);
             выходToolStripMenuItem.Text = "Выход";
             выходToolStripMenuItem.Click += выходToolStripMenuItem_Click;
+            // 
+            // вопросыToolStripMenuItem
+            // 
+            вопросыToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { списокВсехВопросовToolStripMenuItem, добавитьНовыйВопросToolStripMenuItem, удалитьToolStripMenuItem });
+            вопросыToolStripMenuItem.Name = "вопросыToolStripMenuItem";
+            вопросыToolStripMenuItem.Size = new Size(589, 44);
+            вопросыToolStripMenuItem.Text = "Вопросы";
+            // 
+            // списокВсехВопросовToolStripMenuItem
+            // 
+            списокВсехВопросовToolStripMenuItem.Name = "списокВсехВопросовToolStripMenuItem";
+            списокВсехВопросовToolStripMenuItem.Size = new Size(497, 44);
+            списокВсехВопросовToolStripMenuItem.Text = "Список всех вопросов";
+            списокВсехВопросовToolStripMenuItem.Click += списокВсехВопросовToolStripMenuItem_Click;
+            // 
+            // добавитьНовыйВопросToolStripMenuItem
+            // 
+            добавитьНовыйВопросToolStripMenuItem.Name = "добавитьНовыйВопросToolStripMenuItem";
+            добавитьНовыйВопросToolStripMenuItem.Size = new Size(497, 44);
+            добавитьНовыйВопросToolStripMenuItem.Text = "Добавить новый вопрос";
+            добавитьНовыйВопросToolStripMenuItem.Click += добавитьНовыйВопросToolStripMenuItem_Click;
+            // 
+            // удалитьToolStripMenuItem
+            // 
+            удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
+            удалитьToolStripMenuItem.Size = new Size(497, 44);
+            удалитьToolStripMenuItem.Text = "Удалить существующий вапрос";
+            удалитьToolStripMenuItem.Click += удалитьToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -147,5 +179,9 @@
         private ToolStripMenuItem показатьПредыдущиеРеToolStripMenuItem;
         private ToolStripMenuItem рестартToolStripMenuItem;
         private ToolStripMenuItem выходToolStripMenuItem;
+        private ToolStripMenuItem вопросыToolStripMenuItem;
+        private ToolStripMenuItem добавитьНовыйВопросToolStripMenuItem;
+        private ToolStripMenuItem удалитьToolStripMenuItem;
+        private ToolStripMenuItem списокВсехВопросовToolStripMenuItem;
     }
 }

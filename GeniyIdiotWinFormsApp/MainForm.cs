@@ -66,5 +66,22 @@ namespace GeniyIdiotWinFormsApp
             var resultsForm = new ResultsForm();
             resultsForm.ShowDialog();
         }
+
+        private void äîáàâèòüÍîâûéÂîïğîñToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var newQuestionForm = new AddNewQuestionForm();
+            newQuestionForm.ShowDialog();
+        }
+
+        private void ñïèñîêÂñåõÂîïğîñîâToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var questiomListForm = new QuestionListForm();
+            questiomListForm.ShowDialog();
+        }
+
+        private void óäàëèòüToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
