@@ -1,5 +1,6 @@
 ﻿namespace GeniyIdiot.Common
 {
+    [Serializable]
     public class Question
     {
         public string Text { get; set; }
